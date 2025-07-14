@@ -8,6 +8,181 @@ module;
 
 module modern_cpp:algorithms;
 
+namespace Vector_Seminar {
+
+    void test_seminar_01() {
+
+        std::vector<int> numbers;
+        
+        for (int i = 0; i != 100; ++i) {
+
+            numbers.push_back(2 * i);
+
+            std::println("Size: {} - Capacity: {}",
+                numbers.size(), numbers.capacity());
+        }
+    }
+
+    void test_seminar_02() {
+
+        std::vector<int> numbers;
+        numbers.reserve(80);
+
+        for (int i = 0; i != 100; ++i) {
+
+            numbers.push_back(2 * i);
+
+            std::println("Size: {} - Capacity: {}",
+                numbers.size(), numbers.capacity());
+        }
+
+        numbers.shrink_to_fit();
+
+        std::println("Size: {} - Capacity: {}",
+            numbers.size(), numbers.capacity());
+    }
+
+    void test_seminar_03() {
+
+        std::vector<int> numbers;
+        //std::list<int> numbers;
+        // numbers.reserve(10);
+
+        for (int i = 0; i != 10; ++i) {
+            numbers.push_back(2 * i);
+        }
+
+        for (int i = 0; i != 10; ++i) {
+            std::println("Index: {} - Value: {}", i, numbers[i]);
+        }
+    }
+
+    void test_seminar_04() {
+
+        std::vector<int> numbers;
+        std::list<int> list;
+
+        for (int i = 0; i != 3; ++i) {
+            numbers.push_back(2 * i);
+        }
+
+        // Jeder Container bringt einen Datentyp für Positionen mit:
+        std::vector<int>::iterator pos;
+        std::list<int>::iterator lpos;
+
+        // 
+        pos = numbers.begin();
+        lpos = list.begin();
+
+        if (pos == numbers.end()) {
+            return;
+        }
+
+        auto elem = *pos;
+        std::println("Value: {}", elem);
+
+        pos++;
+
+        if (pos == numbers.end()) {
+            return;
+        }
+
+        elem = *pos;
+        std::println("Value: {}", elem);
+
+        pos++;
+
+        if (pos == numbers.end()) {
+            return;
+        }
+
+        elem = *pos;
+        std::println("Value: {}", elem);
+
+        pos++;
+
+        if (pos == numbers.end()) {
+            return;
+        }
+
+        elem = *pos;
+        std::println("Value: {}", elem);
+    }
+
+    void test_seminar_05() {
+
+        using MyType = std::deque<int>;
+        using MyPosition = MyType::iterator;
+
+        // std::deque<int> numbers;
+        MyType numbers;
+
+        for (int i = 0; i != 3; ++i) {
+            numbers.push_back(2 * i);
+        }
+
+        // Jeder Container bringt einen Datentyp für Positionen mit:
+        // std::deque<int>::iterator pos;
+        for (MyPosition pos = numbers.begin(); pos != numbers.end();  ++pos) {
+            std::println("Value: {}", *pos);
+        }
+    }
+
+    void test_seminar_06() {
+
+        using MyType = std::vector<int>;
+        using MyPosition = MyType::iterator;
+
+        // std::deque<int> numbers;
+        MyType numbers;
+
+        for (int i = 0; i != 3; ++i) {
+            numbers.push_back(2 * i);
+        }
+
+        std::for_each (
+            numbers.begin(),
+            numbers.end(),
+            [] (int elem) {
+                std::println("Lamda: Value: {}", elem);
+            }
+        );
+
+        std::for_each(
+            numbers.begin(),
+            numbers.end(),
+            [](int& elem) {
+                elem = 2 * elem;
+            }
+        );
+
+        std::for_each(
+            numbers.begin(),
+            numbers.end(),
+            [](int elem) {
+                std::println("Lamda: Value: {}", elem);
+            }
+        );
+
+        // Jeder Container bringt einen Datentyp für Positionen mit:
+        // std::deque<int>::iterator pos;
+        //for (MyPosition pos = numbers.begin(); pos != numbers.end(); ++pos) {
+        //    std::println("Value: {}", *pos);
+        //}
+    }
+
+    void test_seminar() {
+
+       // test_seminar_01();
+        //test_seminar_02();
+        //test_seminar_03();
+      //  test_seminar_04();
+       // test_seminar_05();
+        test_seminar_06();
+
+    }
+}
+
 namespace Algorithms {
 
     // =================================================================================
@@ -70,7 +245,7 @@ namespace Algorithms {
 
             ScopedTimer watch{};
 
-            std::fill(
+            std::fill(            //  BigData  // memset
                 values.begin(),
                 values.end(),
                 123.0
@@ -86,7 +261,7 @@ namespace Algorithms {
             ScopedTimer watch{};
 
             std::fill(
-                std::execution::par,
+                std::execution::par,     // parallelisierten Version
                 values.begin(),
                 values.end(),
                 123.0
@@ -789,21 +964,24 @@ namespace Algorithms {
 
 void main_algorithms()
 {
+    //Vector_Seminar::test_seminar();
+    //return;
+
     // initialization of std::vector or std::array with a constant value
     Algorithms::Initialization_Vector_Constant_Value::test_vector_constant_initialization();
-    Algorithms::Initialization_Array_Constant_Value::test_array_constant_initialization();
+    //Algorithms::Initialization_Array_Constant_Value::test_array_constant_initialization();
 
-    // initialization of std::vector or std::array with a a varying value
-    Algorithms::Initialization_Vector_Varying_Value::test_vector_varying_initialization();
-    Algorithms::Initialization_Array_Varying_Value::test_array_varying_initialization();
+    //// initialization of std::vector or std::array with a a varying value
+    //Algorithms::Initialization_Vector_Varying_Value::test_vector_varying_initialization();
+    //Algorithms::Initialization_Array_Varying_Value::test_array_varying_initialization();
 
-    // using algorithms for copying ranges (std::vector or std::array)
-    Algorithms::Copying_Vectors::test_vector_copying();
-    Algorithms::Copying_Arrays::test_array_copying();
+    //// using algorithms for copying ranges (std::vector or std::array)
+    //Algorithms::Copying_Vectors::test_vector_copying();
+    //Algorithms::Copying_Arrays::test_array_copying();
 
-    // using algorithms for elementary calculations (std::vector or std::array)
-    Algorithms::Elementary_Calculations_With_Vectors::test_vector_sum_calculation();
-    Algorithms::Elementary_Calculations_With_Arrays::test_array_sum_calculation();
+    //// using algorithms for elementary calculations (std::vector or std::array)
+    //Algorithms::Elementary_Calculations_With_Vectors::test_vector_sum_calculation();
+    //Algorithms::Elementary_Calculations_With_Arrays::test_array_sum_calculation();
 }
 
 // =====================================================================================

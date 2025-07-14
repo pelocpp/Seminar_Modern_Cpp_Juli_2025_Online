@@ -20,7 +20,7 @@ int main()
     try
     {
         //main_accumulate();
-        //main_algorithms();
+        main_algorithms();
         //main_allocator();
         //main_any();
         //main_argument_dependent_name_lookup();
@@ -30,7 +30,7 @@ int main()
         //main_auto();
         //main_back_inserter();
         //main_bind();
-        main_brace_initialization();
+       // main_brace_initialization();
         //main_casts();
         //main_common_type();
         //main_concepts_requires_classes();

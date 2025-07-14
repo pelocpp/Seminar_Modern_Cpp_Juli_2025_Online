@@ -284,3 +284,71 @@ std::vector :  reserve  // Capacity
 
 ==========================================
 
+Algorithmen:
+============
+
+Vektor:
+
+Neue Kap. == Alte Lap. * 1.5;
+
+Merke: Go for 'reserve'
+
+=========================================
+
+STL:
+====
+
+== Container
+
+== Iteratoren (Positionen)
+
+== Algorithmen
+
+Bemerkung:  Zugriff auf einen Container mit operator[]:
+
+    Geht nur bei sequentiellen Container:
+    
+         Da liegen im Speicher alle DATEN am STÜCK hintereinander.
+
+Zugriff auf einen Container: Mit dem Konzept einer "Position"
+
+    Lösung: Wie komme ich von einem Element zum Nächsten ???
+
+Auch für Positionen (Iterator) gibt es ein Regelwerk:
+
+operator++  : gehe zur nächsten Position
+
+operator*:    gib das Element an dieser Position zurück
+
+operator== oder !=:   Vergleiche zwei Positionen
+
+
+========================================================
+
+3-Einigkeit: STL
+
+== Container
+
+     ||
+
+== Iteratoren (Positionen)
+
+     ||
+
+== Algorithmen
+
+
+Vergleich:
+
+Wie kann man den Inhalt eines Containers (std::vector) vorbelegen ????
+
+============================
+
+Andere Sprachen // junge Menschen:  for each
+
+Auch in C++:  for
+
+Go for STL Algorithms ==> kann nur schneller werden :)
+
+Morgen: 2. Blick.
+

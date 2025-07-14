@@ -1,0 +1,286 @@
+=============================================
+
+Seminar Modern C++
+
+Guten Morgen
+
+Peter Loos
+
+C/C++, Java,  C#,  JavaScript, ( Python ), Mobile Programming
+
+Back-to-the-Roots:  C/C++
+
+=============================================
+
+Github
+
+https://github.com/pelocpp
+
+==============================================
+
+2 Tools:
+
+== Visual C++ ( Community 2022 )
+
+== Github:  pelocpp  // Modern Cpp
+
+==============================================
+
+12.30 Mittagspause
+
+Kaffeepausen
+
+Bis 17.00 
+
+==============================================
+
+ToDo-Liste:
+
+noexept
+
+==============================================
+
+
+Erwartungen
+
+Was muss drin sein !!!
+
+Überblick
+
+Fehlt was ???
+
+( Qt ),  WinForms, WPF, Swing ...
+
+Fragen: 
+
+==============================================
+
+Agenda
+
+Roten Faden - Überblick - Systematisierung
+
+==============================================
+
+Referenz:  Hinter den Kullisen:  Adresse / Zeiger
+
+           NICHT änderbar.
+
+           Anschauliche Defintion:  Eine Referenz ist ein ALIAS.
+
+           Es gibt einen ZWEITEN Namen für das Objekt (Variable).
+
+sayHello(a + b);  // +:  Konkatenation: "Hello World"
+
+a ist nicht temporär und hat einen Namen
+
+a + b ist ein temp. Objekt
+a + b hat keine expl. Namen.
+
+C++ 11:
+
+Um Performanz zu steigern:
+
+Es gibt eine neuen, zweiten Typus von Referenzen: std::string &&
+
+Dieser Typus von Referenzen ist definiert für temp. Objekte.
+
+
+Namensgebung:  C
+
+Wertzuweisung:
+
+        a = b;
+        a = 10 + 12;
+ Adresse  = Wert
+
+  LValue  = RValue
+
+
+int&:     LValue-Referenz // Adresse
+
+int&&:    RValue-Referenz // Werte / Temp. Objekt
+
+          KEINEN Namen, anonym ....
+
+Whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy  ===> Move-Semantik
+
+========================================================
+
+Move-Semantik:
+
+... 090   // Objekt am Stack // temporär // wird freigegeben
+... 640   // Objekt im Vektor
+
+
+... 720
+
+
+... 210
+
+
+Kopier-Konstruktor
+------------------
+
+https://github.com/pelocpp/cpp_introduction/blob/master/Cpp_Introduction/Markdown/RuleOfThree.md
+
+Bit-weises Kopieren eines Objekts: Wird automatisch beigestellt.
+
+Achtung: Problem des doppelten delete ( double delete // double free )
+
+
+Vor C++ 11 Periode:  push_back ist "teuer" // 2 Objekte 
+
+Ab C++ 11: Move-Semantik: 2 neue Methoden.
+
+((
+    Kopieren:       Kopier-Konstruktor
+    Wertzuweisung:  operator=
+))
+
+====================================================
+
+// old, "classical" syntax
+std::string toString(int value);
+
+// new syntax with trailing return type
+auto toString(int value) -> std::string;
+
+Whyyyyyyyyyyyyyyyyyyyyyyyy:  3 Minuten
+
+====================================================
+
+Lambda:
+
+Vorbemerkung 1:  Historisch  ==> Verständnis.
+
+Vorbemerkung 2:  "Lambda-Funktion"
+
+                 Exakt: Ein Lambda ist ein OBJEKT.
+
+Beispiel:
+
+Sortieren  ==> std::sort  // Iteratoren (grob)
+
+// -----------------------------------------------
+
+The signature of the comparison function should be equivalent
+to the following:
+
+bool cmp(const Type1& a, const Type2& b);
+
+The signature does not need to have const&: Whyyyy ???
+
+Performanz:
+
+a) Vektor von OBJEKTEN:
+
+   ==> Keine Kopien, sondern Referenzen.
+
+a) Vektor von elem. Datentypen (int / double):
+
+  Vergleich:
+
+      static bool compare (int n1, int n2) {
+
+        int m = n1;
+00007FF7646AC405  mov         eax,dword ptr [n1]  
+00007FF7646AC40B  mov         dword ptr [m],eax  
+
+      static bool compare (int& n1, int n2) {
+
+        int m = n1;
+00007FF69CFEC415  mov         rax,qword ptr [n1]  // rax ist ein Adress-Register
+00007FF69CFEC41C  mov         eax,dword ptr [rax]  
+00007FF69CFEC41E  mov         dword ptr [m],eax  
+
+
+
+"Aufrufbares Objekt" // Callable // Funktor
+
+Stammt von Klassen, die einen bestimmten Operator überladen:
+
+operator()
+
+Whyyyyyyyyy ... ist sehr ähnlich  zu einer Methode einer Klasse
+
+Very easy: Man bekommt eine Methode ... und
+ich muss dieser Methode KEINEN NAMEN geben.
+
+Historisch:
+
+a) freie Funktion
+
+b) Aufrufbares Objekt (Klasse mit Operator () )
+
+c) Ähnlich zu b) -- Die Klasse liegt "nahe" bei ihrer Verwendung
+
+
+Was ist ein Lambda ???????
+
+Ein Lambda ist ein Objekt - ohne Namen - eine Klasse,
+die ebenfalls anonym ist, und die im Kontext der aktuellen Funktion/Methode
+definiert wird und die den Aufrufoperator operator() implementiert.
+
+Die Parameter des  operator() sind ebenfalls im Lambda zu definieren.
+
+--------------------------
+
+        std::sort(
+            vec.begin(),
+            vec.end(),
+            [] (int n1, int n2) {
+                std::cout << "Lambda vgl. " << n1 << " mit " << n2 << std::endl;
+                return n1 < n2;
+            }
+        );
+
+Was ist ein Lambda ?
+
+a) Einfach formuliert:
+
+Eine Funktion, die inline / anonym hingeschrieben wird.
+
+b) Besser formuliert:
+
+Ein Objekt eine Klasse (anonym),
+das den operator() implementiert.
+
+Wozu:
+
+Es ist besser zu Lesen / zu Warten,
+wenn Funktionalität "an einem Ort" steht.
+
+Block hinter die Kulissen:
+
+Tool ==> Cpp Insights.
+
+https://cppinsights.io/
+
+==========================================
+
+        int intArrayFrage[10]{ };
+00007FF66DDFA5EE  lea         rax,[intArrayFrage]  
+00007FF66DDFA5F2  mov         rdi,rax  
+00007FF66DDFA5F5  xor         eax,eax  
+00007FF66DDFA5F7  mov         ecx,28h  
+00007FF66DDFA5FC  rep stos    byte ptr [rdi]  
+
+==========================================
+
+
+std::weak_ptr 
+
+==========================================
+
+STL:
+
+Container:   std::vector // std::map ...
+
+Algorithmen:
+
+std::fill, std::copy, std::transform, std::for_each, ....
+
+std::vector :  reserve  // Capacity
+
+==========================================
+

@@ -2,6 +2,10 @@
 // Array.cpp // std::array // std::to_array // std::span
 // =====================================================================================
 
+module;
+
+#include <span>
+
 module modern_cpp:class_array;
 
 namespace StdArray {
@@ -332,7 +336,8 @@ namespace StdArray {
 
     static void test_30() {
 
-        int carr[]{ 1, 2, 3, 4, 5 };
+        int carr[5]{ 1, 2, 3, 4, 5 };
+
         printArray(carr, 5);
 
         std::array arr{ 6, 7, 8, 9, 10 };
@@ -360,7 +365,7 @@ namespace StdArray {
     static void test_31() {
 
         //int carr[]{ 1, 2, 3, 4, 5 };
-        //printArray(carr);
+        //printArray(carr);   // Typkonvertierung: int [] ==> std::span (...)
 
         //std::array arr{ 6, 7, 8, 9, 10 };
         //printArray(arr);
@@ -368,13 +373,13 @@ namespace StdArray {
         //std::vector<int> vec{ 1, 3, 5, 7, 9 };
         //printArray(vec);
 
-        int carr[]{ 1, 2, 3, 4, 5 };
+        int carr[5]{ 1, 2, 3, 4, 5 };
         printArray(std::span{ carr });
 
-        std::array arr{ 6, 7, 8, 9, 10 };
+        std::array<int, 5> arr{ 6, 7, 8, 9, 10 };
         printArray(std::span{ arr });
 
-        std::vector vec{ 1, 3, 5, 7, 9 };
+        std::vector<int> vec{ 1, 3, 5, 7, 9 };
         printArray(std::span{ vec });
     }
 
@@ -403,27 +408,50 @@ namespace StdArray {
         std::vector vec{ 1, 3, 5, 7, 9 };
         printArrayConst(vec);
     }
+
+    static void test_33() {
+
+        std::vector<int> vec{ 1, 2, 3 };
+      //  vec.reserve(10);
+
+        int* begin = vec.data();
+
+        size_t length = vec.size();
+
+        std::span sp{ begin, length };
+
+        printArray(sp);
+
+        vec.push_back(4);
+
+        sp = std::span { vec.data() , vec.size() };
+
+        printArray(sp);
+    }
+
 }
 
 void main_array()
 {
     using namespace StdArray;
 
-    test_01();
-    test_02();
-    test_03();
-    test_04();
-    test_05();
-    test_06();
-    test_07();
-    test_08();
-    test_09();
-    test_10();
-    test_11();
-    test_20();
-    test_30();
-    test_31();
-    test_32();
+    //test_01();
+    //test_02();
+    //test_03();
+    //test_04();
+    //test_05();
+    //test_06();
+    //test_07();
+    //test_08();
+    //test_09();
+    //test_10();
+    //test_11();
+    //test_20();
+    //test_30();
+    //test_31();
+    //test_32();
+
+    test_33();
 }
 
 // =====================================================================================

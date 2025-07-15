@@ -2,12 +2,17 @@
 // StringView.cpp // Klasse std::string_view
 // =====================================================================================
 
+module;
+
+#include <print>
+
 module modern_cpp:string_view;
 
 namespace StringViewDemonstration {
 
     static void test_01()
     {
+        // Read-Only Objekt
         std::string_view sv{ "AAAAAAAAAAAAAAAAAAAAAAAAAAAA" };  // Konstante Zeichenkette
 
         std::string s{ "AAAAAAAAAAAAAAAAAAAAAAAAAAAA" };        //  Heap
@@ -24,7 +29,7 @@ namespace StringViewDemonstration {
 
         std::println("{}", sv);
 
-        s += "BBBBBBBBBBBBBBBBBBBBBBBBBBBB";        // Caution: the content of s is reallocated !
+        s += "123";        // Caution: the content of s is reallocated !
 
         std::println("{}", sv);
     }

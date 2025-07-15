@@ -2,6 +2,10 @@
 // GenericFunctions.cpp // Generic Functions (incl. Lambdas)
 // =====================================================================================
 
+module;
+
+#include <iostream>
+
 module modern_cpp:generic_functions;
 
 namespace GenericFunctions {
@@ -9,7 +13,7 @@ namespace GenericFunctions {
     // ---------------------------------------------------------------------------------
     // generic function
 
-    static auto function(auto x, int y) {
+    static void function(auto x, int y) {
         std::cout << "x=" << x << ", y=" << y << std::endl;
     };
 
@@ -100,7 +104,7 @@ namespace GenericLambdas {
 
     auto lambda = [](auto x, int y) {
         std::cout << "x=" << x << ", y=" << y << std::endl;
-        };
+    };
 
     static void test_01()
     {
@@ -206,7 +210,9 @@ namespace GenericLambdasExample {
     static void test_01()
     {
         // define a generic lambda
-        auto isGreaterThanFifty = [](const auto& n) { return n > 50; };
+        auto isGreaterThanFifty = [](const auto& n) {
+            return n > 50;
+        };
 
         std::vector<int> intValues{ 44, 65, 22, 77, 2 };
 

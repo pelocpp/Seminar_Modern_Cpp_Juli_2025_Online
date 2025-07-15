@@ -34,7 +34,8 @@ namespace InitializerList {
     static void test_01() {
 
         // testing functions expecting lists in function call
-        int sum = adder({ 1, 2, 3, 4, 5 });
+        int sum = adder( { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 } );
+
         std::cout << sum << std::endl;
 
         print({ 1, 2, 3, 4, 5 });
@@ -45,6 +46,7 @@ namespace InitializerList {
     static void test_02() {
 
         std::initializer_list<int> list{ 1, 2, 3, 4, 5 };
+
         std::vector<int> vec{ list };
     }
 
@@ -81,10 +83,10 @@ namespace InitializerList {
         Polygon polygon
         {                          // c'tor Polygon - using brace initialization syntax
             {                      // braces for std::initializer_list<Point> object
-                { 45.0, 45.0 },    // c'tor Point - using brace initialization syntax
-                { 60.0, 60.0 },    // c'tor Point - using brace initialization syntax
-                { 120.0, 120.0 },
-                { 180.0, 180.0 }
+                Point { 45.0, 45.0 },    // c'tor Point - using brace initialization syntax
+                Point { 60.0, 60.0 },    // c'tor Point - using brace initialization syntax
+                Point { 120.0, 120.0 },
+                Point { 180.0, 180.0 }
             }
         };
 

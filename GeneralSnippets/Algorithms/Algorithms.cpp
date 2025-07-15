@@ -216,6 +216,7 @@ namespace Algorithms {
             std::println("std::vector: using a classic for-loop");
 
             std::vector<double> values(VectorSize);
+            std::array<double, VectorSize> values2;
 
             ScopedTimer watch{};
 
@@ -642,11 +643,10 @@ namespace Algorithms {
 
             ScopedTimer watch{};
 
-            auto itSource{ source.begin() };
             auto itTarget{ target.begin() };
-
             for (auto it{ source.begin() }; it != source.end(); ++it) {
-                *itTarget = *itSource;
+                *itTarget = *it;
+                ++itTarget;
             }
         }
 
@@ -696,7 +696,7 @@ namespace Algorithms {
             std::memcpy(
                 target.data(),
                 source.data(),
-                VectorSize * sizeof(double)
+                VectorSize * sizeof(double)  // length: bytes
             );
         }
 
@@ -736,11 +736,10 @@ namespace Algorithms {
 
             ScopedTimer watch{};
 
-            auto itSource{ source.begin() };
             auto itTarget{ target.begin() };
-
             for (auto it{ source.begin() }; it != source.end(); ++it) {
-                *itTarget = *itSource;
+                *itTarget = *it;
+                ++itTarget;
             }
         }
 
@@ -968,7 +967,7 @@ void main_algorithms()
     //return;
 
     // initialization of std::vector or std::array with a constant value
-    Algorithms::Initialization_Vector_Constant_Value::test_vector_constant_initialization();
+    //Algorithms::Initialization_Vector_Constant_Value::test_vector_constant_initialization();
     //Algorithms::Initialization_Array_Constant_Value::test_array_constant_initialization();
 
     //// initialization of std::vector or std::array with a a varying value
@@ -977,7 +976,7 @@ void main_algorithms()
 
     //// using algorithms for copying ranges (std::vector or std::array)
     //Algorithms::Copying_Vectors::test_vector_copying();
-    //Algorithms::Copying_Arrays::test_array_copying();
+    Algorithms::Copying_Arrays::test_array_copying();
 
     //// using algorithms for elementary calculations (std::vector or std::array)
     //Algorithms::Elementary_Calculations_With_Vectors::test_vector_sum_calculation();

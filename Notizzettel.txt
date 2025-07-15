@@ -350,5 +350,352 @@ Auch in C++:  for
 
 Go for STL Algorithms ==> kann nur schneller werden :)
 
-Morgen: 2. Blick.
+Morgen: 2. Block.
 
+============================
+
+Betrachtungen zur Performanz // STL
+
+std::vector
+
+std::array (C-Style Array)
+
+================================================
+
+Smart Pointer
+-------------
+
+std::unique_ptr
+
+std::shared_ptr
+std::weak_ptr
+
+Aussage: Smart Pointer kümmern sich um das 'delete'
+
+Wie?
+
+Idee:
+
+Alle Smart Pointer sind OBJEKTE
+
+==> Konstruktoren
+    Destruktoren
+
+
+    {
+         Smart Pointer  sp ();    // new
+
+         ...
+
+    }    Destruktor von sp;   // deterministisch // Aktionen: delete // Referenzzähler (delete)
+
+=================================================
+
+Debug - Modus:
+
+3 spezielle Werte im Speicher:
+
+CC - Stack, nicht initialisiert
+
+CD - Heap, nicht initialisiert
+
+DD - Heap, bereits freigegeben
+
+=================================================
+
+Wozu std::weak_ptr ???
+
+Was ist das Problem ???
+
+std::shared_ptr:  Hmmmm, dieser funktioniert nicht immer ?!?!?!?!?!?!?!?!
+
+==> Es wird nicht immer delete aufgerufen !!!!!!!!!!!
+
+a) std::weak_ptr : Wie funktioniert dieser
+
+b) Was ist das Problem genau !!!
+
+   Zyklen.   (  Bildchen   )
+
+   Glück gehabt - habe ich nicht:  Voooooooooooooooooooooorsicht !!!
+
+Frage:
+
+Observer - Pattern:
+
+https://github.com/pelocpp/cpp_design_patterns/blob/master/Patterns/Observer/Resources/Readme.md
+
+Was tut das ???
+
+Es gibt ein Objekt mit relevanten Zustandsdaten:  Aktienkurse, Wetterdaten:
+
+Subject, Ereignis Quelle (Event Source)
+
+==> Beobachten:  Polling - Ginge - Aber ist ineffizient.
+
+== Beobachter (Observer) melden sich an der Ereignis Quelle an.
+
+== Die Ereignis Quelle speichert die Beobachter in einer Liste ab.
+
+
+
+A) Ein (mehrere) Beobachter kennen die Ereignis Quelle.
+
+B) Eine Ereignis Quelle kennt Beobachter (Liste)
+
+========> Hier ist ein Zyklus vorhanden.
+
+I) Ereignis Quelle:  std::shared_ptr   // Besitzer
+
+    // Optional: Es könnte (datentechnisch) auch mehrere Besitzer geben.
+
+II) Beobachter (Observer):   std::shared_ptr  // Besitzer
+
+       Braucht man dieses Objekt (Beobachter) nicht mehr: std::shared_ptr
+       
+       geht Out-of-Scope
+
+III) In der Ereignis Quelle gibt es eine Liste von Beobachtern:
+
+    Von welchem Typ sollten die Elemente in dieser Liste sein ???????????????
+
+    ==> std::weak_ptr
+
+    Theoretisch / SW-technisch:  std::shared_ptr 
+
+    Eine Ereignis Quelle sollte KEIN Besitzer ihrer Observer sein !!!!
+
+Fazit:
+
+std::shared_ptr:    Besitzer
+std::weak_ptr
+
+Visualisierung:     Bauteile / Buchungen / Aktienkurse
+
+==> std::weak_ptr:  i) Die Visualisierung ist kein Besitzer des o.a. Objekts
+
+die Visualisierung muss etwas flexibler programmiert werden:
+
+a) std::weak_ptr => lock => std::shared_ptr:
+
+b) Was ist, wenn std::shared_ptr == nullptr (empty)
+
+Ich will das nicht :-)  Dann werden Objekte, die eigentlich keinen echten Besitzer haben,
+      nicht aus dem Speicher genommen, weil es noch andere Besitzer gibt.
+
+
+nur std::shared_ptr: bad.
+
+Mal sollte std::weak_ptr mit ins Spiel bringen.
+
+
+Fazit: Unterscheidung: Besitzer <=> kein Besitzer.
+
+Diese Thematik ist KEIN reines C++ Problem:
+
+C# // Garbage Collected // Referenz-Counting.
+
+Java: 
+
+=======================================================
+
+std::initializer_list:   ===> Stack   // KEIN new / delete 
+
+std::vector:             ===> Heap    // mit new / delete / reallokation
+
+Performanz:   Go-for std::initializer_list (zB bei Parameterübergabe)
+
+std::initializer_list:
+
+Ist kein vollwertiger STL Container
+
+Leichtgewichtig // Light weight:
+
+== begin()
+== end()
+== size()
+
+Zum Sequenz-Konstruktor:
+
+std::vector<int> vec( 10 );  // Size: 10 - Inhalt: 10 mal 0
+vs.
+std::vector<int> vec{ 10 };  // Size: 1  - Inhalt: einmal 10 
+
+Nur bei std::vector:
+
+std::vector<int> vec( 10, 20 );  // Size: 10 - Inhalt: 10 mal 20
+vs.
+std::vector<int> vec{ 10, 20 };  // Size: 2  - Inhalt: 10 und 20 
+
+====================================================
+
+Generische Funktionen:
+
+"auto zum Ersten":
+
+  Vereinbarung von Variablen
+
+
+"auto zum Zweiten"
+
+  Deklaration des Rückgabetyps
+
+
+"auto zum Dritten"
+
+  Definition eines Parameters mit auto
+
+==============================
+
+Wie sieht der C++ Compiler eine generische Funktion?
+
+    static void function(auto x, int y) {
+        std::cout << "x=" << x << ", y=" << y << std::endl;
+    };
+
+Umsetzung auf Bekanntes:
+
+=============================================
+
+std::pair  ==> std::tuple
+
+  2        ==>     n Elemente
+
+
+Ein std::tuple ist ähnlich zu einer Struktur
+für Schreibfaule :)
+
+Das kann  man ändern .... mit Structured Binding:
+
+Eigentlich sind wir jetzt an Strukturen sehr nah dran ==> Namen.
+
+
+Go for std::tuple
+
+=============================================
+
+Array:
+
+Was ist ein Array:
+
+Eine Menge an Daten desselben Typs (Speicher zusammenhängend), FIXED Size.
+
+C:     int numbers[10];
+
+C++:   int numbers[10];   // C-Stil
+
+       std::array<int, 10> numbers;    // C++ - Klasse // C++ Stil
+
+Hmmm: C ist in C++ enthalten (98%).
+
+Ein C-Array hat Vor- und Nachteile:
+
+int numbers[10];
+
+int n = calcIndex();
+
+int value = numbers[n];  // a) n ist zwischen 0 und 9 (inkl.): passt
+
+                         // b) n ist NICHT zwischen 0 und 9 (inkl.): Man greift "irgendwo" hin
+
+i) Performanz
+
+ii) A Programmer knows what he does.   // Dennis Ritchie 
+
+Vorteil von std::array:
+
+int value = numbers[n];       // ohne Überprüfung (Performanz)
+
+int value = numbers.at(n);    // mit Überprüfung // Robustheit // Exception
+
+
+===============================================================
+
+std::array             //  zusammenhängenden Speicher  // data() // size()
+std::vector            //  zusammenhängenden Speicher  // data() // size()
+
+Helfer:
+
+std::span // Spanne
+
+Woraus besteht ein Objekt des Typs std::span  :  T* ( data()  ) UND Size ( size()  )
+
+Felder:
+
+Go - for - std::array: Daten FIXED-Size.
+
+Go - for - std::span:   C++ 20
+
+
+======================================================
+
+SSO
+
+std::string
+
+foo ()
+{
+    std::string s ("111111111111111111111111111111111111111111111111");
+}
+
+======================================================
+
+const char* s = "111111111111111111111111111111111111111111111111";
+
+Wo liegt in einem C++ Programm diese Zeichenkette ???
+
+NICHT am HEAP !!!  No new !!!!!
+
+.BSS   // eher nicht, weil initialisiert.
+.DATA  // Jepp 1
+.TEXT  // Jepp 2 , obwohl dass das Code Segment ist :)
+
+Was ist das Ziel ??? // Was ist das Thema ???
+
+Betrachtung konstanter Zeichenketten: 
+
+Müssen / sollen konstante Zeichenketten am Heap abgelegt werden:
+
+NEIN. 
+
+VORSICHT: std::string legt diese auf den Heap.
+
+ABER:
+
+std::string_view: Diese legt die Zeichenkette NICHT auf den Heap.
+
+Go for std::string_view , wenn ihr nicht explizit Zeichenkettenverarbeitung
+machen müsst.
+
+Ein std::string_view Objekt ist ein NON-OWNING Objekt.
+
+===========================================================
+
+Wer ist std::variant ???
+
+Eine Variable / ein Objekt, das Daten unterschiedlichen Typs aufnehmen kann,
+zu einem Zeitpunkt aber nur EINEN Wert.
+
+Beispiel:
+
+Excel // Google Sheets:
+
+Zelle // cell:  ==> Zeichenkette, num. Wert, Datum, Currency, ...
+
+Ähnlichkeit: Union 
+
+Feature:
+
+Man kann einen std::variant "besuchen"
+
+std::visit
+
+===========================================================
+
+Baukasten:
+
+Metaprograming ==> Programmierung zur Übersetzungszeit.
+
+Type Traits
+
+if constexpr  =============> Ein if des Übersetzers:

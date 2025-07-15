@@ -20,7 +20,7 @@ int main()
     try
     {
         //main_accumulate();
-        main_algorithms();
+        //main_algorithms();
         //main_allocator();
         //main_any();
         //main_argument_dependent_name_lookup();
@@ -53,7 +53,7 @@ int main()
         //main_functional_programming();
         //main_functional_programming_alternate();
         //main_generate();
-        //main_generic_functions();
+       // main_generic_functions();
         //main_initializer_list();
         //main_input_output_streams();  
         //main_invoke();
@@ -81,10 +81,10 @@ int main()
         //main_sfinae();
         //main_shared_ptr();
         //main_source_location();
-        //main_sso();
+    //    main_sso();
         //main_static_assert();
         //main_string_view();
-        //main_structured_binding();
+      //  main_structured_binding();
         //main_templates_class_basics_01();
         //main_templates_class_basics_02();
         //main_templates_function_basics();
@@ -93,7 +93,7 @@ int main()
         //main_templates_specialization();
         //main_to_underlying();
         //main_transform();
-        //main_tuple(); 
+      //  main_tuple(); 
         //main_two_phase_name_lookup();
         //main_type_erasure();
         //main_type_traits();
@@ -102,7 +102,7 @@ int main()
         //main_variadic_templates_working_on_every_argument();
         //main_variadic_templates_sum_of_sums();
         //main_variadic_templates_mixins();
-        //main_variant();
+        main_variant();
         //main_virtual_base_class_destructor();
         //main_virtual_override_final();
         //main_weak_pointer();

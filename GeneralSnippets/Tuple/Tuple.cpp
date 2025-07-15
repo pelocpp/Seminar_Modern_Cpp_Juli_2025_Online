@@ -9,7 +9,7 @@ namespace TupleSamples {
     // =======================================================
     // demonstrating simple operations on a std::tuple
 
-    static void test_01()
+    static void test_01() 
     {
         // declaring tuple 
         std::tuple <char, int, double> values;
@@ -84,6 +84,8 @@ namespace TupleSamples {
 
     static void test_03()
     {
+        // using Row = std::tuple<int, char, double, std::string>;
+
         Row row1{ 10, 'A', 1.11, "Mueller" };
         Row row2{ 11, 'B', 2.22, "Sepp" };
         Row row3{ 12, 'C', 3.33, "Hans" };
@@ -102,6 +104,7 @@ namespace TupleSamples {
         std::println("Value: {}", val);
         std::println("Name:  {}", name);
 
+        // C++ 17: Structured Binding & Range-based for-Loop (C++ 11)
         for (const auto& [id, abbr, val, name] : mySheet)
         {
             std::println("Id:    {}", id);

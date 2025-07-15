@@ -6,7 +6,7 @@ module modern_cpp:structured_binding;
 
 namespace StructuredBinding {
 
-    static std::pair<int, int> divide_remainder(int dividend, int divisor)
+    static std::pair<int, int> divide_remainder(int dividend, int divisor) 
     {
         int quotient{ dividend / divisor };
 
@@ -14,7 +14,7 @@ namespace StructuredBinding {
 
         std::pair<int, int> result{ quotient, remainder };
 
-        return result;
+        return result;  // Copy / Move Elision ........
     }
 
     static void test_01()
@@ -35,11 +35,13 @@ namespace StructuredBinding {
 
     static void test_03()
     {
-        int arr[] { 123, 456, 789 };
+        int arr[3] { 123, 456, 789 };
 
-        auto [a, b, c] { arr };
+        const auto& [a, b, c] { arr };
 
-        std::println("{}, {}, {}", a, b, c);
+        // a = 999;
+
+        std::println("{}, {}, {}", arr[0], b, c);
     }
 
     static void test_04()
@@ -95,7 +97,7 @@ namespace StructuredBinding {
         std::println("Y Coordinate : {}", y);
 
         // with structured binding and an anonymous object
-        auto [x1, y1] { Point{ 100, 200 } };
+        auto [x1, y1] { Point { 100, 200 } };
 
         std::println("X Coordinate : {}", x1);
         std::println("Y Coordinate : {}", y1);
@@ -144,15 +146,15 @@ namespace StructuredBinding {
 void main_structured_binding()
 {
     using namespace StructuredBinding;
-    test_01();
-    test_02();
-    test_03();
-    test_04();
-    test_05();
-    test_06();
+    //test_01();
+    //test_02();
+  //  test_03();
+    //test_04();
+    //test_05();
+    //test_06();
     test_07();
-    test_08();
-    test_09();
+    //test_08();
+    //test_09();
 }
 
 // =====================================================================================

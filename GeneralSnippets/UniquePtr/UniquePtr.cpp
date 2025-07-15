@@ -4,8 +4,11 @@
 
 module;
 
+
 #include <stdio.h>
 #include <windows.h>
+
+#include <print>
 
 module modern_cpp:unique_ptr;
 
@@ -13,6 +16,8 @@ namespace UniquePointerGeneral {
 
     static std::unique_ptr<int> loadUniquePointer()
     {
+        std::unique_ptr<int> ptr2;
+
         std::unique_ptr<int> ptr{ std::make_unique<int>(100) };
         return ptr;
     }
@@ -24,7 +29,7 @@ namespace UniquePointerGeneral {
         std::println("*ptr:    {}", *ptr);
 
         // take ownership right now:
-        // std::unique_ptr<int> ptr2{ std::move(ptr) };
+        std::unique_ptr<int> ptr2{ std::move(ptr) };
     }
 
     static void storeUniquePointerSafe(const std::unique_ptr<int>& ptr)
@@ -50,6 +55,10 @@ namespace UniquePointerGeneral {
 
     static void test_01()
     {
+        //std::unique_ptr<int> pXXX;
+        //std::unique_ptr<int> pYYY;
+        //pXXX = pYYY;
+
         // create a unique_ptr to an int with value 123
         std::unique_ptr<int> ptr1{ new int{ 123 } };
         // or
@@ -93,14 +102,14 @@ namespace UniquePointerGeneral {
     static void test_02()
     {
         // retrieving a unique pointer from a function
-        std::unique_ptr<int> ptr{ loadUniquePointer() };
+        std::unique_ptr<int> ptr = loadUniquePointer();
         std::println("*ptr:    {}", *ptr);
 
         // provide a function with a unique pointer: who owns the pointer now?
         storeUniquePointer(ptr);
 
         // C++ Core Guidelines
-        storeUniquePointerAlternate(ptr.get());
+      //  storeUniquePointerAlternate(ptr.get());
 
         // does this work?
         std::println("*ptr:    {}", *ptr);

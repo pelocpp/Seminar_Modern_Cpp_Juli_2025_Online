@@ -8,6 +8,60 @@ module;
 
 module modern_cpp:folding;
 
+namespace Folding_Seminar {
+
+    //template <typename ... TArgs>
+    //[[ nodiscard ]] int addierer(TArgs ... args)
+    //{
+    //    auto sum = ( ...  + args );
+
+    //    return sum;
+    //}
+
+    // C++ 20
+
+    int addierer(auto ... args)
+    {
+        auto sum = ( ...  + args );
+
+        return sum;
+    }
+
+    template <typename ... TArgs>
+    int subtrahierer (TArgs ... args)
+    {
+        // auto result = (... - args);   // (... op pack)
+
+        auto result = (args - ...); // (pack op ...)
+
+        return result;
+    }
+
+    template <typename ... TArgs>
+    void printer(TArgs ... args)
+    {
+        // (((init op pack1) op pack2) op ...) op packN
+        // (((std::cout << pack1) << pack2) <<...) << packN
+        // (std::cout << args1) << args2 << args3 << args4 .......
+
+        (std::cout << ... << args);
+    }
+
+    void test_folding () {
+
+        auto result = addierer(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+        // Klammerung von links nach rechts oder von rechts nach links
+        // (1 - 2) - 3 = -4
+        // 1 - (2 - 3) = +2 
+
+        result = subtrahierer(1, 2, 3);
+
+        printer(1, 2, 3, 4, 5, 6, 7, 8);
+    }
+
+}
+
 namespace Folding {
 
     /* folding examples: introduction
@@ -140,9 +194,9 @@ namespace Folding {
 
     static auto addIterating(auto ... values) {
         
-        auto list = { values ...};
+        auto list = { values ... };   // { 1, 2, 3, 4 }
 
-        auto sum{ 0 };
+        /*volatile*/ auto sum{ 0 };
         for (auto elem : list) {
             sum += elem;
         }
@@ -205,15 +259,18 @@ namespace Folding {
 
 void main_folding()
 {
+    //Folding_Seminar::test_folding();
+    //return;
+
     using namespace Folding;
-    test_01();
-    test_02();
-    test_03a();
-    test_03b();
-    test_03c();
-    test_03d();
-    test_04();
-    test_05();
+    //test_01();
+    //test_02();
+    //test_03a();
+    //test_03b();
+    //test_03c();
+    //test_03d();
+    //test_04();
+    //test_05();
     
     // Benchmarks: need to switch to nano seconds! 
     // Optimizer in Release mode is very aggressive

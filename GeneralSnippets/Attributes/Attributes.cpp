@@ -49,7 +49,7 @@ namespace StandardAttributes {
     struct [[ deprecated ]] Struct {};
 
     // for Functions
-    [[ deprecated("Reason for deprecation") ]] void f() {}
+    [[ deprecated ("Reason for deprecation") ]] void f() {}
 
     // for namespaces
     namespace [[ deprecated ]] any_namespace {}

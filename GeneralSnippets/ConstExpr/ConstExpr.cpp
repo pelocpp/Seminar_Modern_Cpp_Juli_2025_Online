@@ -4,11 +4,40 @@
 
 module modern_cpp:const_expr;
 
+namespace ConstExpr_Seminar {
+
+    void test_constexpr_lambda() {
+
+        [] {};
+
+        []() {};
+
+        []() {}();
+
+        auto l1 = []() {};
+
+        l1();
+
+        auto l2 = [](int n, int m) { return n + m; };
+
+        auto result = l2(10, 11);
+        std::println("{}", result);
+
+        constexpr auto l3 = [](int n, int m) { return n + m; };
+
+        // IIFE : Entspricht Makros und defines a la C - nur besser, weil typsicher
+        constexpr auto l4 = [](int n, int m) { return n + m; } (5, 6);
+
+    }
+
+
+}
+
 namespace ConstExprComplex {
 
     class Complex
     {
-    private:
+    private: 
         float m_real;
         float m_imag;
 
@@ -26,7 +55,7 @@ namespace ConstExprComplex {
         {
             float real = m_real + other.m_real;
             float imag = m_imag + other.m_imag;
-            return { real, imag };
+            return Complex{ real, imag };
         }
     };
 
@@ -66,7 +95,7 @@ namespace ConstExprDynamicData {
 
     static void testDynamicData()
     {
-        constexpr int sum = naiveSum(10);
+        constexpr int sum = naiveSum(7);  // 1 +2 +3 +4 +5 = 15
         std::println("Sum from 1 up to 10: {}", sum);
     }
 }
@@ -140,6 +169,9 @@ namespace ConstExprPow {
 
 void main_constexpr()
 {
+    ConstExpr_Seminar::test_constexpr_lambda();
+    return;
+
     ConstExprComplex::testComplex();
     ConstExprDynamicData::testDynamicData();
     ConstExprPow::testPower();

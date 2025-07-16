@@ -122,7 +122,7 @@ namespace VariantDemo {
     {
         std::vector<int> numbers;
 
-        std::vector<int>::value_type value2;
+     //   std::vector<int>::value_type value2;
 
         int value = 123;
         numbers.push_back(value);
@@ -270,7 +270,11 @@ struct my_remove_reference<T&> {
     static void test_07() {
 
         std::vector<std::variant<int, long, long long, float, double>>
+
             vec = { 100, 200l, 300ll, 400.5f, 500.5 };
+
+
+
 
         // display each value
         std::println("Values:      ");
@@ -403,10 +407,10 @@ void main_variant()
     //test_01();
     //test_02();
     //test_03();
-    test_04();
+    //test_04();
     //test_05();
     //test_06();
-    //test_07();
+    test_07();
     //test_08();
     //test_09();
     //test_10();

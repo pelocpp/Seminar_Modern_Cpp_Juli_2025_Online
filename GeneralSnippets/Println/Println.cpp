@@ -5,7 +5,7 @@
 module modern_cpp:println;
 
 // defines for custom formatting
-// #define StdFormatter_01_Basic_Formatter_API
+#define StdFormatter_01_Basic_Formatter_API
 // #define StdFormatter_02_Parsing_Format_String
 // #define StdFormatter_03_Delegating_Formatting_to_Standard_Formatters
 // #define StdFormatter_04_Inheriting_From_Standard_Formatters
@@ -25,7 +25,7 @@ namespace StdPrintln {
     static void test_02()
     {
         int value{ 123 };
-        std::println("Value: {}", value);
+        std::println("Value: {}", value);  // printf
     }
 
     static void test_03()
@@ -34,6 +34,7 @@ namespace StdPrintln {
         int secondValue{ 456 };
 
         std::println("First Value: {}, Second Value: {}", firstValue, secondValue);
+
         std::println("First Value: {0}, Second Value: {1}", firstValue, secondValue);
     }
 
@@ -147,6 +148,10 @@ namespace std
 {
     using namespace Formatting_Examples_Revised;
 
+    // primary template ===> struct formatter 
+    // ==> in der STL vorhanden => im Namensraum 'std'
+
+    // template specialization
     template<>
     struct formatter<SimpleClass>
     {
@@ -157,7 +162,7 @@ namespace std
 
         // format by always writing its value:
         auto format(const SimpleClass& obj, std::format_context& ctx) const {
-            return std::format_to(ctx.out(), "{}", obj.getValue());
+            return std::format_to(ctx.out(), "SimpleClass: {}", obj.getValue());
         }
     };
 }
@@ -613,18 +618,18 @@ static void test_18()
 // ===========================================================================
 // ===========================================================================
 
-void main_println()
+void main_println() 
 {
     using namespace StdPrintln;
 
-    test_01();
-    test_02();
-    test_03();
-    test_04();
-    test_05();
-    test_06();
-    test_07();
-    test_08();
+    //test_01();
+    //test_02();
+    //test_03();
+    //test_04();
+    //test_05();
+    //test_06();
+    //test_07();
+    //test_08();
 
 #ifdef StdFormatter_01_Basic_Formatter_API
     test_10();

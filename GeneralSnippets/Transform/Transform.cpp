@@ -6,12 +6,12 @@ module modern_cpp:transform;
 
 namespace AlgorithmTransform {
 
-    static void test_01()
+    static void test_01() 
     {
         // very simple phone book
         std::cout << "List of Entries: " << std::endl;
 
-        std::unordered_map<std::string, size_t> phonebook
+        std::unordered_map<std::string, size_t> phonebook   // Hash-Tabelle
         {
             { "Hans Meier" ,     12345678 },
             { "Franz Schneider", 81726354 },
@@ -22,15 +22,25 @@ namespace AlgorithmTransform {
             std::cout << name << ": " << number << std::endl;
         }
 
-        std::vector<std::string> names(phonebook.size());  // set size of vector (!)
+        // std::vector<std::string> names(phonebook.size());  // set size of vector (!)
+        std::vector<std::string> names;
+        
+        names.resize(5);
 
         // std::transform on a single range - retrieve names from phonebook
         std::transform(
             phonebook.begin(),
             phonebook.end(),
-            names.begin(),      // beginning of the destination range
+
+             names.begin(),      // beginning of the destination range
+         //   std::back_inserter(names),   // Adapter:  push_back
+            
             [](const std::pair<const std::string, size_t>& entry) {
-                return std::get<0>(entry);
+
+                const auto& [name, phone] = entry;
+                return name;
+
+                // return std::get<0>(entry);
             }
         );
 
@@ -109,8 +119,8 @@ void main_transform()
 {
     using namespace AlgorithmTransform;
     test_01();
-    test_02();
-    test_03();
+    //test_02();
+    //test_03();
 }
 
 // =====================================================================================

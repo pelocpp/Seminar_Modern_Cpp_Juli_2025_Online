@@ -6,6 +6,9 @@ Guten Morgen
 
 Peter Loos
 
+peter.loos@gmx.de
+-----------------
+
 C/C++, Java,  C#,  JavaScript, ( Python ), Mobile Programming
 
 Back-to-the-Roots:  C/C++
@@ -699,3 +702,408 @@ Metaprograming ==> Programmierung zur Übersetzungszeit.
 Type Traits
 
 if constexpr  =============> Ein if des Übersetzers:
+
+===========================================================
+
+Variadische Templates:
+
+a) Kennen lernen, Verstehen , Verständnis für die STL besser wird
+
+b) Selbst anwenden: 2. Schritt
+
+c) Whyyyyyyyyyyyyyyyyyyyyyyyyyyyyy    <===============
+
+TRANSPORT von Daten von A nach B - unterschiedlichen Typs - beliebig viele
+
+a) std::make_unique
+
+b) std::make_tuple 
+
+c) std::thread ==> Thread-Prozedur
+
+d) ....
+
+===========================================================
+
+Bjarne Stroustrup: C with Classes  ( OO )
+
+Alexander Stepanow: Generische Programmierung (Templates)
+
+==> Bibliothek: STL // Standard TEMPLATE Library
+
+==> C# (Generics), Java
+
+===========================================================
+
+constexpr
+
+Frage: Wie / wo gibt es hierfür (relevante) Einsatzmöglichkeiten ???
+
+Embedded Programming.
+
+===========================================================
+
+Literale // Konstante
+
+123
+
+123.3456
+
+123l
+
+123ll
+
+123.34f
+
+123_km
+
+123_kg
+
+123_kilometer    // Suffix
+
+123_meter
+
+123_euro
+
+0xFF00FF_farbe
+
+0xFF00FF_rgb
+
+0xFF00FFrgb
+
+chrono: ms, 
+
+Technologische Konstante
+
+Programmiersprache :
+
+Lexikon - Wörter der Sprache (Programmiersprache)
+Syntax (Grammatik)
+
+C++  ==> das Lexikon ist erweiterbar:  123_kilometer
+
+Sourcecode:  123_kilometer  ==> Welcher Datentyp 
+
+UDL: User defined Literal
+
+Wie:   operator "" ==> Literaloperator
+
+return_type operator "" suffix (parameter) { }
+
+suffix: _farbe  _km ....
+
+Beispiel:
+
+return_type: Keinen elem. Typ: Klasse Color // _rgb
+
+Bemerkung:
+
+Wert:   numerisch   // 0xFF0000
+
+        Zeichenkette
+
+Color c = "FF0000"_rgb;  // nicht so hübsch
+
+"11:52:30"_time
+
+"16.7.2025"_date
+
+Element eines Warenkorb:
+
+"titel:autor"_book
+
+In einer Zeichenkette kann prinzipiell alles stehen
+
+==> Parsen
+
+"DE:76050101:0012345678"_iban   // Länderkennung // BLZ // Kt.Nr ==> IBAN
+
+std::string : "DEXX760501010012345678"   Prüfziffer ???
+
+Literal Operator:  "DE:76050101:0012345678"
+
+
+DE
+Prüfziffer
+74
+Bankleitzahl
+10050000
+Kontonummer
+9492290003
+
+=========================================================
+
+Binäre Operatoren in C/C++: Binäres Und
+
+Nicht zu verwechseln mit: && :  if (  a > b  && c > d )
+
+
+=========================================================
+
+Socket: Werte als Bits / Bytes oder int.
+
+==> Visualisierung: std::string
+
+Verdichten:
+
+"Hans", 1234567  ===> "Hans"
+
+std::map              ===> (Schlüssel, Wert) / Binärer Baum
+
+                           Ein binärer Baum ist (per Def. / C++) SORTIERT.
+
+std::unordered_map    ===> (Schlüssel, Wert) / Hash-Tabelle
+
+
+================================================================
+
+Was ist eine Hash-Tabelle ???
+
+Wann setze ich sie ein ???
+
+Was ist eine  Hash-Tabelle ???
+
+Beispiel:
+
+Zwei Werte:  Schlüssel  // Wert  Paar: Key, Value
+
+a) Tel.Buch:    Name, Nummer  // "Hans" // std::string // Nummer: size_t 12345678
+
+b) Fremdsprachenlexikon:
+
+  Wort deutsch, Wort englisch  // "Haus" // "house"
+
+c) Dictionary
+
+d) Aktien:
+
+   "BMW" // 50.55 (double)
+
+
+NiCHT: Viele Werte in einem Vektor // Feld
+
+Theoretisch:
+
+Viele (Schlüssel/ Wert) - Paare linear in einem Vektor ablegen.
+
+PROBLEM: NACHTEIL: SUCHE, Nachschauen
+
+Vektor: 100.000  // BMW: 99.999   Nachschauen: unsäglich langsam
+
+Idee:
+
+Eingabe: Schlüssel
+
+Idee man berechne einen Index zu einem Schlüssel:   Hash-Funktion
+
+Hash ==> streuen  // Streu Funktion
+
+"BMW" ==> 254 (Index)
+
+( Ascii_wert (B) + Ascii_wert (M) + Ascii_wert (W) ) % Table_Length (500)
+ 
+PROBLEM:  
+
+"Hans Mueller" und "Tina Meier":   152
+
+Hash Kollision
+
+Kollisions Strategien
+
+Simple Kollisions Strategie:  Durch Verkettung.
+---------------------------
+
+std::vector  ===>  std::unordered_map
+
+Indiz:  Suche nach einem Wert // for  // std::for_each
+
+        Schlüssel : Hash-Tabelle
+
+====================================================
+
+std::copy // std::transform // std::copy_if ....  A ==> B
+
+Wie schreibt std::transform den "transformierten" Wert (Name) in das Ziel-Objekt:
+
+A) mit operator=  KONSEQUENZ: Ziel-Objekt muss passende Größe haben
+
+B) NICHT MIT push_back
+
+Ginge es denn nicht aus mit push_back ???? Ja, es ginge.
+
+push_back: Ziel-Objekt könnte leer sein.
+
+====================================================
+
+Attribute
+
+====================================================
+
+
+std::optional
+
+int    value;
+
+size_t value;
+
+std::string s;
+
+// ....
+
+// hmm, ist da jetzt ein Wert tatsächlich in value
+
+if (value == 0)
+
+if (value == -1)
+
+...
+
+if (s == "")
+
+
+int  value;
+bool flag;   // true / false
+
+=======================================================
+
+
+std::variant
+
+std::variant<int, long, ...> var;
+
+std::any
+
+// --------------------
+
+std::variant  : Am Stack   (std::vector )
+
+std::any:       Am Heap
+
+==================================================
+
+Folding:
+
+Whyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+
+Zu EINEM Operator kann tatsächlich OPTIMALER Maschinencode erzeugt werden.
+
+Was:
+
+Optimierung von Ausdrücken, die DENSELBEN Operator verwenden.
+
+int n = ((1 + 2) + 3) + 4 + 5 + 6 + 7 + 8 + 9;
+
+int n = v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9;
+
+
+Folding Ausdruck
+
+// ===================================================
+
+All-In: Viele Konzepten
+
+
+Kapitel "Type Erasure":
+
+Eher nicht behandeln:
+
+std::variant
+std::any
+std::function
+
+Buchhandlung
+============
+
+Vorbereitung:
+-------------
+
+Container:  
+
+C++: std::vector<T>
+
+ArrayList (C#, Java)
+
+Wording:
+
+Homogener Container:    Alle Elemente sind vom selben Typ
+
+Heterogener Container:  Die Elemente können unterschiedlichen Typs sein.
+
+In C++:
+
+Grundsätzlich nur homogene Container - mit std::variant eine gewisse Flexibilität möglich
+
+
+C#, Java: Objekt-Modell:
+
+Da gibt es für ALLE Klassen eine gemeinsame Basisklasse:  Object
+
+ArrayList ===> Object
+
+Oder siehe Qt ...
+
+class Book  : public Object
+
+class Movie
+
+
+
+// ===================================================
+
+Vergleich:
+
+Buchhandlung: Soll unterschiedliche Produkte verkaufen:
+
+Book, Movie, .... BlueRay, DVD, Journal, Zeitung , PrintMedium 
+
+a) Klassisch
+
+   Schnittstellenkonzept (Gemeinsamkeiten) // virtuelle Methoden
+
+b) Modern
+
+   KEIN Schnittstellenkonzept // keine virtuelle Methoden
+
+   Container mit std::variant
+
+   std::visit mit gen. Lambda
+
+   Überprüfung relevanter Methoden mit concept / requires
+
+   KEINE VERERBUNG // kein virtual
+
+   statischer Polymorphismus
+
+   price = element.getPrice();  // PUNKT = DIREKTER Zugriff auf die Methode
+
+   ABER: std::variant hat auch einen Preis
+
+
+
+B) ist anders als A)
+
+Vergleich: Design // Performanz ... 
+
+           statischer versus dynamischer Polymorphismus
+
+
+dynamischer Polymorphismus:
+
+total += media->getPrice() * media->getCount();
+
+->  ===> INDIREKTER Methodenaufruf ("langsamer")
+
+=======================================================
+
+Type Traits    Metaprogramming  // Reflection
+-----------
+
+std::is_same
+
+std::remove_reference
+
+C++ 26: Komplett überarbeitet // erweitert.
+
+C++ bleibt am Ball.
+
+=======================================================
